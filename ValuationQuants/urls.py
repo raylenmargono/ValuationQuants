@@ -16,9 +16,11 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from realtime_demand import views
+from adminplus.sites import AdminSitePlus
+
+admin.site = AdminSitePlus()
+admin.autodiscover()
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url('^data/(?P<query>.+)/$', views.StockDataView.as_view()),
 ]

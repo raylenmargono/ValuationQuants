@@ -6,17 +6,7 @@ import MainStore from 'stores/MainStore';
 import SearchPageComponent from './SearchPageComponent';
 import LatentDemandBreakdownChart from './chart/LatentDemandBreakdownChart';
 import ValuationCompositionChart from './chart/ValuationCompositionChart';
-
-class MarketCapitalizationCard extends React.Component {
-  render(){
-    return (
-      <div className="card-panel z-depth-5">
-        <h5>Total Market Capitalization</h5>
-        <h3>$3B</h3>
-      </div>
-    );
-  }
-}
+import BrowserHistory from './BrowserHistory';
 
 class StockFundamentalsCard extends React.Component {
   render(){
@@ -37,26 +27,17 @@ class StockFundamentalsCard extends React.Component {
   }
 }
 
-class LatentDemandCard extends React.Component {
-  render(){
-    return(
-      <div className="card-panel z-depth-5">
-        <h5>Total Latent Demand</h5>
-        <h3>40</h3>
-      </div>
-    );
-  }
-}
-
 class InvestorCard extends React.Component {
   getInvestorRows(){
     const investors = this.props.currentAsset.investors;
     var result = [];
     investors.forEach((investor)=>{
       result.push(
-        <li key={investor.investorName} className="collection-item">
-          <p className="title">{investor.investorName}: <b> {investor.latentDemand}</b></p>
-        </li>
+        <tr key={investor.investorName}>
+          <td >{investor.investorName}</td>
+          <td>{investor.aum}</td>
+          <td>{investor.stocksHeld}</td>
+        </tr>
       );
     });
     return result;
@@ -65,9 +46,18 @@ class InvestorCard extends React.Component {
     return(
       <div className="card-panel z-depth-5">
         <h5>Top 5 Largest Investors</h5>
-        <ul className="collection">
-          {this.getInvestorRows()}
-        </ul>
+        <table className="centered">
+          <thead>
+            <tr>
+                <th>Firm</th>
+                <th>Assets Under Management</th>
+                <th>Stocks Held</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.getInvestorRows()}
+          </tbody>
+        </table>
       </div>
     );
   }
@@ -122,11 +112,22 @@ class InfoPageComponent extends React.Component {
     const params = new URLSearchParams(search);
     return params.get('q');
   }
+  performSearch(e, searchInput){
+    e.preventDefault();
+    BrowserHistory.push({
+      search: `?q=${searchInput}`
+    });
+    MainStore.performSearch(searchInput);
+  }
   render() {
     return (
       <div className="infopage-component">
-        <NavBar displaySearch={true} query={this.getQuery()}/>
-        {this.getQuery() ? <InfoContainer {...this.state}/> : <SearchPageComponent/>}
+        <NavBar performSearch={this.performSearch} displaySearch={true} query={this.getQuery()}/>
+        {
+          this.getQuery() ?
+          <InfoContainer {...this.state}/> :
+          <SearchPageComponent performSearch={this.performSearch}/>
+        }
       </div>
     );
   }

@@ -1,0 +1,3 @@
+Ticker,Company Name,Price,Fundamental Value,Investor1,Investor2,Investor3,Investor4,Investor5,LatentDemand1,LatentDemand2,LatentDemand3,LatentDemand4,LatentDemand5,StockHeld1,StockHeld2,StockHeld3,StockHeld4,StockHeld5
+AAPL,Apple Inc.,156,140,Fidelity,Vanguard,AQR,State Street,Pictet,8,-7,7,5,3,1000,2000,4000,5000,6000
+MSFT,Microsoft,72,90,AQR,Blackrock,Fidelity,UBS,BNY,-9,-8,6,-5,-2,6000,5000,1000,4000,2000

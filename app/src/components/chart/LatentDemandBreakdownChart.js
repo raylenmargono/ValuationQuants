@@ -4,6 +4,8 @@
 
 import React from 'react';
 const ReactHighcharts = require('react-highcharts');
+const clone = require('clone');
+
 
 const config = {
     chart: {
@@ -11,9 +13,6 @@ const config = {
     },
     title: {
         text: 'Latent Demand Breakdown'
-    },
-    subtitle: {
-        text: 'By Top 5 Investors'
     },
     xAxis: {
         categories: [],
@@ -44,8 +43,9 @@ const config = {
 class LatentDemandBreakdownChart extends React.Component {
   constructor(props){
     super(props);
+    this.localConfig = clone(config);
     props.currentAsset.investors.forEach((data)=> {
-      config.series.push({
+      this.localConfig.series.push({
         name: data.investorName,
         data: [parseFloat(data.latentDemand)]
       });
@@ -53,7 +53,7 @@ class LatentDemandBreakdownChart extends React.Component {
   }
   render() {
     return (
-      <ReactHighcharts config={config} />
+      <ReactHighcharts config={this.localConfig} />
     );
   }
 }

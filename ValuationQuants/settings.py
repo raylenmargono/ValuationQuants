@@ -31,13 +31,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    'django.contrib.admin.apps.SimpleAdminConfig',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework'
+    'rest_framework',
+    'adminplus',
+    'realtime_demand'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -57,7 +59,7 @@ ROOT_URLCONF = 'ValuationQuants.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ["{}{}".format(BASE_DIR, '/templates/')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

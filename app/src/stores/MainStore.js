@@ -6,8 +6,8 @@ class Investor {
   constructor(data){
     this.investorName = data["investor_name"];
     this.latentDemand = data["latent_demand"];
-    this.aum;
-    this.stocksHeld;
+    this.aum = 0;
+    this.stocksHeld = 0;
   }
 }
 

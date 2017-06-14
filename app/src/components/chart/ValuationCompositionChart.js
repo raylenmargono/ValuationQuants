@@ -3,6 +3,7 @@
  */
 import React from 'react';
 const ReactHighcharts = require('react-highcharts');
+var clone = require('clone');
 
 const config = {
     chart: {
@@ -46,22 +47,23 @@ class ValuationCompositionChart extends React.Component {
     const currentAsset = props.currentAsset;
     const fundamentalValue = parseFloat(currentAsset.fundamentalValue);
     const price = parseFloat(currentAsset.price);
-    config.series.push({
+    this.localConfig = clone(config);
+    this.localConfig.series.push({
       name: "Price",
       data: [price]
     });
-    config.series.push({
+    this.localConfig.series.push({
       name: "Fundamental Value",
       data: [fundamentalValue]
     });
-    config.series.push({
+    this.localConfig.series.push({
       name: "Latent Demand Value",
       data: [price - fundamentalValue]
     });
   }
   render() {
     return (
-      <ReactHighcharts config={config} />
+      <ReactHighcharts config={this.localConfig} />
     );
   }
 }

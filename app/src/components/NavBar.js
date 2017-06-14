@@ -20,7 +20,8 @@ class NavBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      query: props.query
+      query: props.query,
+      searchInput: ""
     };
   }
   componentDidMount(){
@@ -31,9 +32,16 @@ class NavBar extends React.Component {
   renderSearchBar() {
     if(this.props.displaySearch){
       return(
-        <form action="/search">
+        <form onSubmit={(e)=> this.props.performSearch(e, this.state.searchInput)}>
           <div className="input-field">
-            <input name="q" defaultValue={this.state.query} id="search" type="search" required />
+            <input
+              name="q"
+              defaultValue={this.state.query}
+              id="search"
+              type="search"
+              required
+              onChange={(e)=>this.setState({searchInput: e.target.value})}
+            />
             <label className="label-icon" htmlFor="search">
               <i className="material-icons">search</i>
             </label>
