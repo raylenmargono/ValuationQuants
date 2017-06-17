@@ -8,6 +8,9 @@ const ApiSource = {
       if(hostname === "localhost" || hostname === "127.0.0.1"){
         hostname = `${window.location.protocol}//127.0.0.1:8080`;
       }
+      else{
+        hostname = "http://api.valuationquants";
+      }
       return axios.get(`${hostname}/assets/${query}/`);
     },
     loading: MainActions.loadingResults,
