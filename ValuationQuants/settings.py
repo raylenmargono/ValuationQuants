@@ -142,5 +142,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'app/')
 
 CORS_ORIGIN_WHITELIST = (
     '127.0.0.1:8000',
-    'www.valuationquants.com'
+    'http://www.valuationquants.com'
 )
