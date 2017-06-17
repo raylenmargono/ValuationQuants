@@ -16,7 +16,10 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from rest_framework.routers import DefaultRouter
 from adminplus.sites import AdminSitePlus
+
+from realtime_demand.views import AssetViewSet
 
 admin.site = AdminSitePlus()
 admin.autodiscover()
@@ -24,3 +27,8 @@ admin.autodiscover()
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 ]
+
+router = DefaultRouter()
+router.register(r'assets', AssetViewSet)
+
+urlpatterns += router.urls

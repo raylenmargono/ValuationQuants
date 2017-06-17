@@ -47,6 +47,7 @@ class ValuationCompositionChart extends React.Component {
     const currentAsset = props.currentAsset;
     const fundamentalValue = parseFloat(currentAsset.fundamentalValue);
     const price = parseFloat(currentAsset.price);
+    const latentDemandValue = parseFloat(currentAsset.latentDemandValue);
     this.localConfig = clone(config);
     this.localConfig.series.push({
       name: "Price",
@@ -58,7 +59,7 @@ class ValuationCompositionChart extends React.Component {
     });
     this.localConfig.series.push({
       name: "Latent Demand Value",
-      data: [price - fundamentalValue]
+      data: [latentDemandValue]
     });
   }
   render() {
