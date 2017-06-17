@@ -79,11 +79,25 @@ WSGI_APPLICATION = 'ValuationQuants.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+database_config = {
+    'ENGINE': 'django.db.backends.sqlite3',
+    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+}
+
+if not DEBUG:
+    from ValuationQuants import keys
+    database_config = {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': keys.DATABASE_NAME,
+        'USER': keys.DATABASE_USER,
+        'PASSWORD': keys.DATABASE_PASSWORD,
+        'HOST': 'localhost',
+        'PORT': '',
     }
+
+
+DATABASES = {
+    'default': database_config
 }
 
 
