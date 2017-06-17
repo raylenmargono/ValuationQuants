@@ -9,7 +9,7 @@ const ApiSource = {
         hostname = `${window.location.protocol}//127.0.0.1:8080`;
       }
       else{
-        hostname = "http://api.valuationquants";
+        hostname = "http://api.valuationquants.com";
       }
       return axios.get(`${hostname}/assets/${query}/`);
     },
