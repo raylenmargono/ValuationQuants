@@ -25,7 +25,7 @@ SECRET_KEY = '^z$s_s&!3#8iwn8xlt6s)sc)ts8)9$%3kqn5ckb#!y%0p+17%!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config.DEBUG
 
-ALLOWED_HOSTS = ["127.0.0.1"]
+ALLOWED_HOSTS = ["127.0.0.1", "valuationquants"]
 
 
 # Application definition
