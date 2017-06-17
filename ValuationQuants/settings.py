@@ -140,10 +140,4 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'app/')
 
 
-CORS_ORIGIN_WHITELIST = (
-    '127.0.0.1:8000',
-    'www.valuationquants.com'
-)
-
-CORS_URLS_REGEX = r'^/search/.*$'
-
+CORS_ORIGIN_ALLOW_ALL = True
