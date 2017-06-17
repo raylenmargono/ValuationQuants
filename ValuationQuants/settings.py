@@ -25,7 +25,7 @@ SECRET_KEY = '^z$s_s&!3#8iwn8xlt6s)sc)ts8)9$%3kqn5ckb#!y%0p+17%!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1"]
 
 
 # Application definition
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'adminplus',
+    'corsheaders',
     'realtime_demand'
 ]
 
@@ -123,3 +124,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+
+CORS_ORIGIN_WHITELIST = (
+    '127.0.0.1:8000'
+)

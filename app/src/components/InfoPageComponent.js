@@ -67,26 +67,41 @@ class InfoContainer extends React.Component {
   render(){
     const currentAsset = this.props.currentAsset;
     const isLoading = this.props.isLoading;
+    const hasError = this.props.hasError;
+    var view = null;
+    if(isLoading){
+      view = <h3>Loading</h3>
+    }
+    else if(hasError){
+      view = <h3>Ticker not found</h3>
+    }
+    else {
+      view = (
+        <div>
+          <h5>{currentAsset.companyName} - {currentAsset.ticker} </h5>
+          <div className="row">
+            <div className="col s12 m6">
+              <InvestorCard currentAsset={currentAsset}/>
+            </div>
+            <div className="col s12 m6">
+              <LatentDemandBreakdownChart currentAsset={currentAsset}/>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col s12 m6">
+              <StockFundamentalsCard currentAsset={currentAsset}/>
+            </div>
+            <div className="col s12 m6">
+              <ValuationCompositionChart currentAsset={currentAsset}/>
+            </div>
+          </div>
+        </div>
+      );
+    }
     return(
       isLoading ? null :
       <div className="container info-container">
-        <h5>{currentAsset.companyName} - {currentAsset.ticker} </h5>
-        <div className="row">
-          <div className="col s12 m6">
-            <InvestorCard currentAsset={currentAsset}/>
-          </div>
-          <div className="col s12 m6">
-            <LatentDemandBreakdownChart currentAsset={currentAsset}/>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col s12 m6">
-            <StockFundamentalsCard currentAsset={currentAsset}/>
-          </div>
-          <div className="col s12 m6">
-            <ValuationCompositionChart currentAsset={currentAsset}/>
-          </div>
-        </div>
+        {view}
       </div>
     );
   }

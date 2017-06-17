@@ -59,6 +59,8 @@ class AssetFile(UploadFile):
             asset.fundamental_value = row["fundamental value"]
             asset.company_name = row["company name"]
             asset.save()
+            if asset.asset_investors.exists():
+                asset.asset_investors.all().delete()
             for i in range(1, 6):
                 investor_name = row["investor{}".format(i)]
                 stocks_owned = row["stockheld{}".format(i)]

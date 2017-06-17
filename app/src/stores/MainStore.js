@@ -4,10 +4,10 @@ import MainActions from 'actions/MainActions';
 
 class Investor {
   constructor(data){
-    this.investorName = data["investor_name"];
-    this.latentDemand = data["latent_demand"];
-    this.aum = 0;
-    this.stocksHeld = 0;
+    this.investorName = data["investor"]["name"];
+    this.latentDemand = data["latent_demand_value"];
+    this.aum = data["investor"]["aum"];
+    this.stocksHeld = data["stocks_owned"];
   }
 }
 
@@ -15,10 +15,11 @@ class AssetData {
   constructor(data){
     this.investors = [];
     data["investors"].forEach((data)=>{this.investors.push(new Investor(data))});
-    this.price = data["price"];
+    this.price = data["quarter_end_price"];
     this.ticker = data["ticker"];
     this.companyName = data["company_name"];
-    this.fundamentalValue = data["fundamental_value"]
+    this.fundamentalValue = data["fundamental_value"];
+    this.latentDemandValue = data["total_latent_demand_value"];
   }
 }
 
@@ -39,8 +40,9 @@ export class MainStore {
     this.isLoading = true;
   }
   receivedResults(payload){
-    this.currentAsset = new AssetData(payload);
+    this.currentAsset = new AssetData(payload["data"]);
     this.isLoading = false;
+    this.hasError = false;
   }
   fetchingResultsFailed(payload){
     this.hasError = true;

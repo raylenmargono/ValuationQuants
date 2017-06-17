@@ -8,7 +8,6 @@ from django.db.models import Sum
 class Asset(models.Model):
     quarter_end_price = models.FloatField(default=0)
     fundamental_value = models.FloatField(default=0)
-    latent_demand_value = models.FloatField(default=0)
     ticker = models.CharField(max_length=10, unique=True)
     company_name = models.CharField(max_length=100)
 
