@@ -5,3 +5,4 @@ env
 ValuationQuants/keys.py
 ValuationQuants/config.py
 /static/src/node_modules/
+*.pyc
