@@ -26,7 +26,7 @@ SECRET_KEY = keys.SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config.DEBUG
 
-ALLOWED_HOSTS = ["127.0.0.1", "api.valuationquants.com", "localhost"]
+ALLOWED_HOSTS = ["127.0.0.1", "www.valuationquants.com", "localhost"]
 
 
 # Application definition
