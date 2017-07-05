@@ -6,7 +6,7 @@ from realtime_demand.models import Investor, Asset, AssetInvestors
 class InvestorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Investor
-        fields = ("name", "aum")
+        fields = ("name",)
 
 
 class AssetInvestorSerializer(serializers.ModelSerializer):
@@ -15,10 +15,10 @@ class AssetInvestorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AssetInvestors
-        fields = ("stocks_owned", "latent_demand_value", "investor")
+        fields = ("latent_demand_value", "investor")
 
     def get_investor(self, obj):
-        return InvestorSerializer(obj.investor).data
+        return obj.investor.name
 
 
 class AssetSerializer(serializers.ModelSerializer):
@@ -27,7 +27,7 @@ class AssetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Asset
-        fields = ("quarter_end_price", "fundamental_value",
+        fields = ("current_market_cap", "fundamental_value", "household_value",
                   "total_latent_demand_value", "ticker", "company_name",
                   "investors")
 

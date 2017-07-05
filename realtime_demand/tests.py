@@ -19,15 +19,13 @@ class AssetAPITestCase(APITestCase):
         admin_password = "se3CurePass1ord!"
         admin_user = User.objects.create_superuser("adminuser", "admin@valuationquants.com", admin_password)
         base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        test_data_path = "{}{}".format(base_path, "/realtime_demand/file_upload_validator/test_data")
-        asset_data_csv = "{}{}".format(test_data_path, "/asset_data.csv")
-        investor_data_csv = "{}{}".format(test_data_path, "/investor_data.csv")
+        dir_path = "/realtime_demand/file_upload_validator/test_data/"
+        test_data_path = "{}{}{}".format(base_path,  dir_path, "DecomposeValuationsSimpleMod.csv")
         c = Client()
         c.login(username=admin_user.username, password=admin_password)
 
-        with open(asset_data_csv, 'r') as asset_file, open(investor_data_csv, 'r') as investor_file:
+        with open(test_data_path, 'r') as asset_file:
             res = c.post("/admin/file/upload", {
-                "investor_file": investor_file,
                 "asset_file": asset_file
             })
 

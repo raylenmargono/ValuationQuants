@@ -7,31 +7,24 @@ from django.shortcuts import render
 from django.contrib import messages
 
 from realtime_demand.models import Asset, AssetInvestors, Investor
-from realtime_demand.file_upload_validator.file_upload_validator import InvestorFile, AssetFile
+from realtime_demand.file_upload_validator.file_upload_validator import AssetFile
 
 
 class FileUploadForm(forms.Form):
-    investor_file = forms.FileField(label="Select Investor CSV")
     asset_file = forms.FileField(label="Select Asset CSV")
 
     def __init__(self, post=None, files=None):
         super(FileUploadForm, self).__init__(post, files)
         self.asset_file = None
-        self.investor_file = None
 
     def clean(self):
         cleaned_data = super(FileUploadForm, self).clean()
-        investor_file_data = cleaned_data.get('investor_file')
         asset_file_data = cleaned_data.get('asset_file')
-        self.investor_file = InvestorFile(investor_file_data)
         self.asset_file = AssetFile(asset_file_data)
-        self.investor_file.validate_fields()
-        self.investor_file.validate_entries()
-        self.asset_file.validate_fields()
-        self.asset_file.validate_entries()
+        # self.asset_file.validate_fields()
+        # self.asset_file.validate_entries()
 
     def populate_database(self):
-        self.investor_file.populate_database()
         self.asset_file.populate_database()
 
 

@@ -2,6 +2,7 @@ import os
 import csv
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
+import pandas as pd
 from realtime_demand.models import Asset, AssetInvestors, Investor
 
 
@@ -13,81 +14,58 @@ class FileUploadTestCase(TestCase):
 
     def test_file_upload(self):
         base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        test_data_path = "{}{}".format(base_path, "/file_upload_validator/test_data")
-        asset_data_csv = "{}{}".format(test_data_path, "/asset_data.csv")
-        investor_data_csv = "{}{}".format(test_data_path, "/investor_data.csv")
+        test_data_path = "{}{}".format(base_path, "/file_upload_validator/test_data/DecomposeValuationsSimple.csv")
         c = Client()
         c.login(username=self.admin_user.username, password=self.admin_password)
 
-        with open(asset_data_csv, 'r') as asset_file, open(investor_data_csv, 'r') as investor_file:
+        with open(test_data_path, 'r') as asset_file:
             self.assertGreater(len(list(asset_file)), 0)
-            self.assertGreater(len(list(investor_file)), 0)
 
-        with open(asset_data_csv, 'r') as asset_file, open(investor_data_csv, 'r') as investor_file:
+        with open(test_data_path, 'r') as asset_file:
             res = c.post("/admin/file/upload", {
-                "investor_file": investor_file,
                 "asset_file": asset_file
             })
             self.assertEqual(res.status_code, 200)
             self.assertEqual(len(res.context["form"].errors), 0)
 
-        with open(asset_data_csv, 'r') as asset_file, open(investor_data_csv, 'r') as investor_file:
-            self.validate_investor_file(investor_file)
+        with open(test_data_path, 'r') as asset_file:
             self.validate_asset_file(asset_file)
 
-        update_asset_data_csv = "{}{}".format(test_data_path, "/update_asset_data.csv")
-        update_investor_data_csv = "{}{}".format(test_data_path, "/update_investor_data.csv")
-        with open(update_asset_data_csv, 'r') as asset_file, open(update_investor_data_csv, 'r') as investor_file:
+        update_path = "{}{}".format(base_path, "/file_upload_validator/test_data/DecomposeValuationsSimpleMod.csv")
+        with open(update_path, 'r') as asset_file:
             res = c.post("/admin/file/upload", {
-                "investor_file": investor_file,
                 "asset_file": asset_file
             })
             self.assertEqual(res.status_code, 200)
             self.assertEqual(len(res.context["form"].errors), 0)
 
-        with open(update_asset_data_csv, 'r') as asset_file, open(update_investor_data_csv, 'r') as investor_file:
-            self.validate_investor_file(investor_file)
+        with open(update_path, 'r') as asset_file:
             self.validate_asset_file(asset_file)
-
-    def validate_investor_file(self, investor_file):
-        investor_data_reader = csv.DictReader(investor_file)
-        for row in investor_data_reader:
-            investor = row["Investor"]
-            aum = int(row["AUM"])
-            self.assertTrue(Investor.objects.filter(name=investor, aum=aum).exists())
-            investor_local = Investor.objects.get(name=investor)
-            self.assertEqual(investor_local.aum, aum)
 
     def validate_asset_file(self, asset_file):
-        asset_data_reader = csv.DictReader(asset_file)
-        for row in asset_data_reader:
-            ticker = row["Ticker"]
+        df = pd.read_csv(asset_file)
+        group_by_order = ["ticker", "comnam", "M", "MF", "viI", "viH"]
+        asset_dict_investor_df = {tup[0]: tup[1] for tup in list(df.groupby(group_by_order))}
+        for asset_list, investor_df in asset_dict_investor_df.iteritems():
+            ticker = asset_list[0]
+            company_name = asset_list[1]
+            current_market_cap = asset_list[2]
+            fundamental_value = asset_list[3]
+            total_latent_demand_value = asset_list[4]
+            household_value = asset_list[5]
             self.assertTrue(Asset.objects.filter(ticker=ticker).exists())
-
-            company_name = row["Company Name"]
-            price = float(row["Price"])
-            fundamental_value = float(row["Fundamental Value"])
-            asset_local = Asset.objects.get(ticker=ticker)
-            self.assertEqual(asset_local.company_name, company_name)
-            self.assertEqual(asset_local.quarter_end_price, price)
-            self.assertEqual(asset_local.fundamental_value, fundamental_value)
-
-            total_latent_demand_value = 0
-            for i in range(1, 6):
-                investor_name = row["Investor{}".format(i)]
-                stocks_owned = int(row["StockHeld{}".format(i)])
-                latent_demand_value = float(row["LatentDemand{}".format(i)])
-                self.assertTrue(Investor.objects.filter(name=investor_name).exists())
-                asset_investor_query_set = AssetInvestors.objects.filter(
-                    investor__name=investor_name,
-                    asset=asset_local
-                )
-                self.assertTrue(asset_investor_query_set.exists())
-                self.assertEqual(asset_investor_query_set.count(), 1)
-                asset_investor = AssetInvestors.objects.get(investor__name=investor_name, asset=asset_local)
-                demand_value = asset_investor.latent_demand_value
-                self.assertEqual(stocks_owned, asset_investor.stocks_owned)
-                self.assertEqual(latent_demand_value, asset_investor.latent_demand_value)
-                total_latent_demand_value += demand_value
-
-            self.assertEqual(asset_local.total_latent_demand_value, total_latent_demand_value)
+            asset = Asset.objects.get(ticker=ticker)
+            self.assertEqual(asset.company_name, company_name)
+            self.assertEqual(asset.current_market_cap, current_market_cap)
+            self.assertEqual(asset.fundamental_value, fundamental_value)
+            self.assertEqual(asset.total_latent_demand_value, total_latent_demand_value)
+            self.assertEqual(asset.household_value, household_value)
+            self.assertEqual(asset.asset_investors.all().count(), 5)
+            for index, row in investor_df.iterrows():
+                investor_name = row["mgrname"]
+                investor_latent_demand_value = row["viInv"]
+                self.assertTrue(Investor.objects.filter(name=investor_name))
+                investor = Investor.objects.get(name=investor_name)
+                self.assertTrue(AssetInvestors.objects.filter(asset=asset, investor=investor))
+                asset_investor = AssetInvestors.objects.get(asset=asset, investor=investor)
+                self.assertEqual(asset_investor.latent_demand_value, investor_latent_demand_value)

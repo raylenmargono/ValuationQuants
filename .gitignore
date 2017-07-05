@@ -4,4 +4,4 @@ env
 .idea
 ValuationQuants/keys.py
 ValuationQuants/config.py
-
+/static/src/node_modules/

@@ -1,0 +1,229 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block title %}Valuation Quants{% endblock %}
+
+{% block content %}
+<body>
+
+    <div class="navbar-fixed">
+      <nav role="navigation">
+        <div class="nav-wrapper container">
+          <a id="logo-container" href="#" class="brand-logo">VQ</a>
+          <ul class="right hide-on-med-and-down">
+            <li><a href="{% url 'Search' %}">Valuations</a></li>
+            <li><a class="navbar-link" href="#wwd">What We Do</a></li>
+            <li><a class="navbar-link" href="#methodology">Methodology</a></li>
+            <li><a class="navbar-link" href="#team">Team</a></li>
+            <li><a class="navbar-link" href="#disclaimer">Disclaimer</a></li>
+            <li><a class="navbar-link" href="#faq">FAQ</a></li>
+          </ul>
+
+          <ul id="nav-mobile" class="side-nav">
+            <li><a href="{% url 'Search' %}">Valuations</a></li>
+            <li><a class="navbar-link" href="#wwd">What We Do</a></li>
+            <li><a class="navbar-link" href="#methodology">Methodology</a></li>
+            <li><a class="navbar-link" href="#team">Team</a></li>
+            <li><a class="navbar-link" href="#disclaimer">Disclaimer</a></li>
+            <li><a class="navbar-link" href="#faq">FAQ</a></li>
+          </ul>
+          <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+        </div>
+      </nav>
+    </div>
+
+  <section id="slider" class="parallax-container">
+    <div class="section no-pad-bot">
+      <div id="header-container" class="container">
+        <br><br>
+        <h1 class="header center teal-text text-lighten-2">Valuation Quants</h1>
+        <div class="row center">
+          <h5 class="header col s12 light">Demand-Based Equity Valuations</h5>
+        </div>
+        <div class="row center">
+          <a href="{% url 'Search' %}" id="download-button" class="btn-large waves-effect waves-light teal lighten-1">Get Started</a>
+        </div>
+        <br><br>
+
+      </div>
+    </div>
+    <canvas class="parallax" id="canvas-particle"></canvas>
+  </section>
+
+
+  <div class="container">
+    <div id="wwd" class="section">
+
+      <!--   Icon Section   -->
+      <div class="row">
+        <div class="col s12 m12">
+          <div class="icon-block">
+            <h2 class="center brown-text"><i class="material-icons">polymer</i></h2>
+            <h5 class="center">About What We Do</h5>
+            <p style="margin-bottom: 55px;" class="light">
+                Latent demand captures differences in beliefs or constraints.
+                For instance, take two firms with the same fundamentals,
+                but investors are more optimistic about firm A than firm B.
+                Then the value of firm A will be higher than the value of firm B (assuming that they're not perfect substitutes).
+                Now, the beliefs of large investors, who allocate more capital, matters more.
+                That is, if I like Apple, it will have virtually no impact on prices; if BlackRock like Apple, it may affect the price.
+                Hence, the wedge between the actual price and the fundamental value reflects beliefs or constraints of investors, which we can break down to the investor level.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="methodology" class="parallax-container valign-wrapper">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <div class="row">
+            <div class="col s6">
+                <h1 class="header light">Methodology</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <a class="waves-effect waves-light btn">Click To View</a>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="parallax"><img src="{% static "img/background1.jpg" %}" alt="Unsplashed background img 2"></div>
+  </div>
+
+  <div id="team" class="container">
+    <div class="section">
+
+        <div class="row">
+            <div class="col s12 center">
+                <div class="icon-block">
+                    <h2 class="center brown-text"><i class="material-icons">perm_identity</i></h2>
+                    <h4>Team</h4>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col m4 s12">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                      <img class="team-image activator" src="http://www.stern.nyu.edu/faculty/static/photos/rkoijen.9">
+                    </div>
+                    <div class="card-content">
+                      <span class="card-title activator grey-text text-darken-4">Ralph Koijen<i class="material-icons right">more_vert</i></span>
+                    </div>
+                    <div class="card-reveal">
+                      <span class="card-title grey-text text-darken-4">Bio<i class="material-icons right">close</i></span>
+                      <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                    </div>
+                  </div>
+            </div>
+            <div class="col m4 s12">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                      <img class="team-image activator" src="https://sites.google.com/site/motohiroyogo/_/rsrc/1475255914907/home/20151015_YogoM_DJA_004.jpg?height=320&width=238">
+                    </div>
+                    <div class="card-content">
+                      <span class="card-title activator grey-text text-darken-4">Motohiro Yogo<i class="material-icons right">more_vert</i></span>
+                    </div>
+                    <div class="card-reveal">
+                      <span class="card-title grey-text text-darken-4">Bio<i class="material-icons right">close</i></span>
+                      <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                    </div>
+                  </div>
+            </div>
+        </div>
+
+    </div>
+  </div>
+
+    <div id="disclaimer" class="parallax-container valign-wrapper">
+        <div class="section no-pad-bot">
+          <div class="container">
+            <div class="row center">
+                <h1 class="header col s12 m4 light">Disclaimer</h1>
+                <p class="col s12 m8 light">asfdasdfas dasfdasf </p>
+            </div>
+          </div>
+        </div>
+        <div class="parallax"><img src="{% static "img/background3.jpg" %}" alt="Unsplashed background img 3"></div>
+      </div>
+
+
+    <div id="faq" class="container">
+        <div class="section">
+
+            <div class="row">
+                <div class="col s12 center">
+                    <div class="icon-block">
+                        <h2 class="center brown-text"><i class="material-icons">question_answer</i></h2>
+                        <h4>FAQ</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12 center">
+                    <ul class="collapsible popout" data-collapsible="accordion">
+                        <li>
+                          <div class="collapsible-header">First</div>
+                          <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+                        </li>
+                        <li>
+                          <div class="collapsible-header">Second</div>
+                          <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+                        </li>
+                        <li>
+                          <div class="collapsible-header">Third</div>
+                          <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+                        </li>
+                      </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  <footer class="page-footer teal">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">Company Bio</h5>
+          <p class="grey-text text-lighten-4">We are a team of college students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>
+
+
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Settings</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Link 1</a></li>
+            <li><a class="white-text" href="#!">Link 2</a></li>
+            <li><a class="white-text" href="#!">Link 3</a></li>
+            <li><a class="white-text" href="#!">Link 4</a></li>
+          </ul>
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Connect</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Link 1</a></li>
+            <li><a class="white-text" href="#!">Link 2</a></li>
+            <li><a class="white-text" href="#!">Link 3</a></li>
+            <li><a class="white-text" href="#!">Link 4</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      Made by <a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+      </div>
+    </div>
+  </footer>
+  
+
+{% endblock %}
+
+{% block bodyJS %}
+    <!--  Scripts-->
+    <script src="{% static "dist/homeApp.min.js" %}"></script>
+{% endblock %}

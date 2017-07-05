@@ -1,0 +1,19 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block title %}Valuation Quants{% endblock %}
+
+{% block content %}
+    <div id="app"></div>
+{% endblock %}
+
+{% block bodyJS %}
+    <script>
+        var GLOBAL = {
+          API: {
+              search: "{% url 'asset-detail' ticker='tmp' %}"
+          }
+        };
+    </script>
+    <script type="text/javascript" src="{% static "dist/searchApp.min.js"%}"></script>
+{% endblock %}

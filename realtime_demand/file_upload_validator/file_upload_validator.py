@@ -1,6 +1,7 @@
 import csv
 import re
 from django.forms import forms
+import pandas as pd
 from realtime_demand.file_upload_validator import constants
 from realtime_demand.models import AssetInvestors, Asset, Investor
 
@@ -12,6 +13,7 @@ class UploadFile(object):
             raise forms.ValidationError("Please upload a valid csv file")
 
         self.valid_fields_dict = valid_fields_dict
+        self.data_file = data_file
         self.reader = csv.DictReader(data_file)
         self.reader.fieldnames = [field.strip().lower() for field in self.reader.fieldnames]
         self.file_name = file_name
@@ -40,50 +42,24 @@ class UploadFile(object):
 class AssetFile(UploadFile):
     def __init__(self, data_file):
         valid_fields_dict = {
-            "ticker": constants.STRING_FIELD,
-            "company name": constants.STRING_FIELD,
-            "fundamental value": constants.NUMBER_FIELD,
-            "price": constants.NUMBER_FIELD
+            "permno": constants.NUMBER_FIELD,
+            "mgrno": constants.NUMBER_FIELD,
+            "comnam": constants.STRING_FIELD,
+            "mgrname": constants.STRING_FIELD,
+            "m": constants.NUMBER_FIELD,
+            "mf": constants.NUMBER_FIELD,
+            "vii": constants.NUMBER_FIELD,
+            "vih": constants.NUMBER_FIELD,
+            "viinv": constants.NUMBER_FIELD,
+            "ticker": constants.STRING_FIELD
         }
-        for i in range(1, 6):
-            valid_fields_dict["investor{}".format(i)] = constants.STRING_FIELD
-            valid_fields_dict["latentdemand{}".format(i)] = constants.NUMBER_FIELD
-            valid_fields_dict["stockheld{}".format(i)] = constants.NUMBER_FIELD
         super(AssetFile, self).__init__(valid_fields_dict, data_file, "Asset File")
 
     def populate_database(self):
-        for row in self.validated_rows:
-            ticker = row["ticker"]
-            asset, created = Asset.objects.get_or_create(ticker=ticker)
-            asset.quarter_end_price = row["price"]
-            asset.fundamental_value = row["fundamental value"]
-            asset.company_name = row["company name"]
-            asset.save()
-            if asset.asset_investors.exists():
-                asset.asset_investors.all().delete()
-            for i in range(1, 6):
-                investor_name = row["investor{}".format(i)]
-                stocks_owned = row["stockheld{}".format(i)]
-                latent_demand = row["latentdemand{}".format(i)]
-                investor, created = Investor.objects.get_or_create(name=investor_name)
-                asset_investor, created = AssetInvestors.objects.get_or_create(asset=asset, investor=investor)
-                asset_investor.stocks_owned = stocks_owned
-                asset_investor.latent_demand_value = latent_demand
-                asset_investor.save()
-
-
-class InvestorFile(UploadFile):
-    def __init__(self, data_file):
-        valid_fields_dict = {
-            "investor": constants.STRING_FIELD,
-            "aum": constants.NUMBER_FIELD
-        }
-        super(InvestorFile, self).__init__(valid_fields_dict, data_file, "Investor File")
-
-    def populate_database(self):
-        for row in self.validated_rows:
-            company_name = row["investor"]
-            aum = row["aum"]
-            investor, created = Investor.objects.get_or_create(name=company_name)
-            investor.aum = aum
-            investor.save()
+        self.data_file.seek(0)
+        df = pd.read_csv(self.data_file)
+        group_by_order = ["ticker", "comnam", "M", "MF", "viI", "viH"]
+        asset_dict_investor_df = {tup[0]: tup[1] for tup in list(df.groupby(group_by_order))}
+        for asset_list, investor_df in asset_dict_investor_df.iteritems():
+            asset = Asset.get_or_create_using_asset_list(asset_list)
+            AssetInvestors.create_asset_investors_using_df(investor_df, asset)

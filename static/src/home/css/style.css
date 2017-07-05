@@ -1,0 +1,105 @@
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+
+p {
+  line-height: 2rem;
+}
+
+.button-collapse {
+  color: #26a69a;
+}
+
+#header-container {
+  margin-top: 150px;
+}
+
+.parallax-container {
+  min-height: 380px;
+  line-height: 0;
+  height: auto;
+  color: rgba(255,255,255,.9);
+}
+  .parallax-container .section {
+    width: 100%;
+  }
+
+@media only screen and (max-width : 992px) {
+  .parallax-container .section {
+    position: absolute;
+  }
+  #index-banner .section {
+    top: 10%;
+  }
+  .header{
+    font-size: 40px;
+  }
+}
+
+@media only screen and (max-width : 600px) {
+  #index-banner .section {
+    top: 0;
+  }
+}
+
+.icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+  font-size: inherit;
+}
+
+footer.page-footer {
+  margin: 0;
+}
+
+body{
+  background-color: black;
+}
+
+.navbar-fixed.scrolled {
+  background-color: #fff !important;
+  transition: background-color 200ms linear;
+}
+
+nav {
+  background-color: transparent;
+}
+
+.navbar-fixed{
+  position: absolute !important;
+  z-index: 1000;
+}
+
+nav ul a,
+nav .brand-logo {
+  color: white;
+}
+
+.fade-background {
+  background-color: #26a69a;
+  -webkit-transition: background-color 1s;
+  transition: background-color 1s;
+}
+
+.fade-background-body {
+  background-color: white;
+  -webkit-transition: background-color 1s;
+  transition: background-color 1s;
+}
+
+
+.team-image{
+  width: 280.156px;
+  height: 316.531px;
+}
+
+
+.collapsible{
+  color: black;
+}
