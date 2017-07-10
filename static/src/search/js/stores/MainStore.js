@@ -2,10 +2,14 @@ import alt from '../components/Dispatcher';
 import ApiSource from '../sources/ApiSource';
 import MainActions from '../actions/MainActions';
 
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 class Investor {
   constructor(data){
-    this.investorName = data["investor"];
-    this.latentDemand = data["latent_demand_value"];
+    this.investorName = numberWithCommas(data["investor"]);
+    this.latentDemand = numberWithCommas(data["latent_demand_value"]);
   }
 }
 
@@ -13,12 +17,12 @@ class AssetData {
   constructor(data){
     this.investors = [];
     data["investors"].forEach((data)=>{this.investors.push(new Investor(data))});
-    this.currentMarketCap = data["current_market_cap"];
-    this.ticker = data["ticker"];
-    this.companyName = data["company_name"];
-    this.fundamentalValue = data["fundamental_value"];
-    this.latentDemandValue = data["total_latent_demand_value"];
-    this.householdValue = data["household_value"];
+    this.currentMarketCap = numberWithCommas(data["current_market_cap"]);
+    this.ticker = numberWithCommas(data["ticker"]);
+    this.companyName = numberWithCommas(data["company_name"]);
+    this.fundamentalValue = numberWithCommas(data["fundamental_value"]);
+    this.latentDemandValue = numberWithCommas(data["total_latent_demand_value"]);
+    this.householdValue = numberWithCommas(data["household_value"]);
   }
 }
 
