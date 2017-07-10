@@ -18,7 +18,7 @@ const config = {
     },
     yAxis: {
         title: {
-            text: 'Latent Demand'
+            text: 'Latent Demand (Billions)'
         }
     },
     tooltip: {

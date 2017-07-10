@@ -3,7 +3,7 @@ require("./canvas.particles");
 
 (function($){
   $(function(){
-
+    $('.modal').modal();
     $('.button-collapse').sideNav();
     $('.parallax').parallax();
     $('.collapsible').collapsible();
@@ -33,7 +33,7 @@ require("./canvas.particles");
           // Using jQuery's animate() method to add smooth page scroll
           // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
           $('html, body').animate({
-            scrollTop: $(hash).offset().top - 65
+            scrollTop: $(hash).offset().top - 30
           }, 800, function(){
 
           });

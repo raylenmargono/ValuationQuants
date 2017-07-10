@@ -13,7 +13,7 @@ class StockFundamentalsCard extends React.Component {
     const currentAsset = this.props.currentAsset;
     return(
       <div className="card-panel z-depth-5">
-        <h5>Valuation Breakdown</h5>
+        <h5>Valuation Breakdown (Billions)</h5>
         <ul className="collection">
           <li className="collection-item">
             <p className="title">Market Cap: <b>{currentAsset.currentMarketCap}</b></p>
@@ -22,10 +22,10 @@ class StockFundamentalsCard extends React.Component {
             <p className="title">Fundamental Value: <b>{currentAsset.fundamentalValue}</b></p>
           </li>
           <li className="collection-item">
-            <p className="title">Latent Demand Value: <b>{currentAsset.latentDemandValue}</b></p>
+            <p className="title">Institutional Latent Demand: <b>{currentAsset.latentDemandValue}</b></p>
           </li>
           <li className="collection-item">
-            <p className="title">Household Value: <b>{currentAsset.householdValue}</b></p>
+            <p className="title">Household Latent Demand: <b>{currentAsset.householdValue}</b></p>
           </li>
         </ul>
       </div>
@@ -51,11 +51,11 @@ class InvestorCard extends React.Component {
     return(
       <div className="card-panel z-depth-5">
         <h5>Top 5 Largest Investors</h5>
-        <table className="centered">
+        <table>
           <thead>
             <tr>
-                <th>Firm</th>
-                <th>Latent Demand Value</th>
+                <th>Investor</th>
+                <th>Institutional Latent Demand (Billions)</th>
             </tr>
           </thead>
           <tbody>
