@@ -61,13 +61,7 @@
             <h2 class="center brown-text"><i class="material-icons">polymer</i></h2>
             <h5 class="center">About What We Do</h5>
             <p style="margin-bottom: 55px;" class="light">
-                Latent demand captures differences in beliefs or constraints.
-                For instance, take two firms with the same fundamentals,
-                but investors are more optimistic about firm A than firm B.
-                Then the value of firm A will be higher than the value of firm B (assuming that they're not perfect substitutes).
-                Now, the beliefs of large investors, who allocate more capital, matters more.
-                That is, if I like Apple, it will have virtually no impact on prices; if BlackRock like Apple, it may affect the price.
-                Hence, the wedge between the actual price and the fundamental value reflects beliefs or constraints of investors, which we can break down to the investor level.
+                {{ about_section.text }}
             </p>
           </div>
         </div>
@@ -85,8 +79,10 @@
             </div>
         </div>
         <div class="row">
-            <div class="col s12">
-                <a target="_blank" href="{% static "files/Outline.pdf" %}" class="waves-effect waves-light btn">Click To View</a>
+            <div class="col s8">
+                <p>
+                    {{ methodology.text }}
+                </p>
             </div>
         </div>
       </div>
@@ -96,7 +92,6 @@
 
   <div id="team" class="container">
     <div class="section">
-
         <div class="row">
             <div class="col s12 center">
                 <div class="icon-block">
@@ -106,36 +101,23 @@
             </div>
         </div>
         <div class="row">
-            <div class="col m4 s12">
-                <div class="card">
-                    <div class="card-image waves-effect waves-block waves-light">
-                      <img class="team-image activator" src="http://www.stern.nyu.edu/faculty/static/photos/rkoijen.9">
-                    </div>
-                    <div class="card-content">
-                      <span class="card-title activator grey-text text-darken-4">Ralph Koijen<i class="material-icons right">more_vert</i></span>
-                    </div>
-                    <div class="card-reveal">
-                      <span class="card-title grey-text text-darken-4">Bio<i class="material-icons right">close</i></span>
-                      <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                    </div>
-                  </div>
-            </div>
-            <div class="col m4 s12">
-                <div class="card">
-                    <div class="card-image waves-effect waves-block waves-light">
-                      <img class="team-image activator" src="https://sites.google.com/site/motohiroyogo/_/rsrc/1475255914907/home/20151015_YogoM_DJA_004.jpg?height=320&width=238">
-                    </div>
-                    <div class="card-content">
-                      <span class="card-title activator grey-text text-darken-4">Motohiro Yogo<i class="material-icons right">more_vert</i></span>
-                    </div>
-                    <div class="card-reveal">
-                      <span class="card-title grey-text text-darken-4">Bio<i class="material-icons right">close</i></span>
-                      <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                    </div>
-                  </div>
-            </div>
+            {% for team_member in team_members %}
+                <div class="col m4 s12">
+                    <div class="card">
+                        <div class="card-image waves-effect waves-block waves-light">
+                          <img class="team-image activator" src="{{ team_member.profile_picture.url }}">
+                        </div>
+                        <div class="card-content">
+                          <span class="card-title activator grey-text text-darken-4">{{ team_member.name }}<i class="material-icons right">more_vert</i></span>
+                        </div>
+                        <div class="card-reveal">
+                          <span class="card-title grey-text text-darken-4">Bio<i class="material-icons right">close</i></span>
+                          <p>{{ team_member.description }}</p>
+                        </div>
+                      </div>
+                </div>
+            {% endfor %}
         </div>
-
     </div>
   </div>
 
@@ -144,7 +126,7 @@
           <div class="container">
             <div class="row center">
                 <h1 class="header col s12 m4 light">Disclaimer</h1>
-                <p class="col s12 m8 light">asfdasdfas dasfdasf </p>
+                <p class="col s12 m8 light">{{ disclaimer.text }}</p>
             </div>
           </div>
         </div>
@@ -166,18 +148,12 @@
             <div class="row">
                 <div class="col s12 center">
                     <ul class="collapsible popout" data-collapsible="accordion">
-                        <li>
-                          <div class="collapsible-header">First</div>
-                          <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-                        </li>
-                        <li>
-                          <div class="collapsible-header">Second</div>
-                          <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-                        </li>
-                        <li>
-                          <div class="collapsible-header">Third</div>
-                          <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-                        </li>
+                        {% for faq in faqs %}
+                            <li>
+                              <div class="collapsible-header">{{ faq.question }}</div>
+                              <div class="collapsible-body"><span>{{ faq.answer }}</span></div>
+                            </li>
+                        {% endfor %}
                       </ul>
                 </div>
             </div>
@@ -225,5 +201,16 @@
 
 {% block bodyJS %}
     <!--  Scripts-->
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
     <script src="{% static "dist/homeApp.min.js" %}"></script>
+    <script>
+        MathJax.Hub.Config({
+          tex2jax: {
+            inlineMath: [['$','$'], ['\\(','\\)']],
+            processEscapes: true
+          }
+        });
+    </script>
 {% endblock %}

@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'adminplus',
     'corsheaders',
-    'realtime_demand'
+    'realtime_demand',
+    'home'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -138,6 +139,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = '/staticfiles/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = 'media'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
