@@ -5,7 +5,9 @@ django-extensions==1.8.0
 djangorestframework==3.6.3
 gunicorn==19.7.1
 numpy==1.13.0
+olefile==0.44
 pandas==0.20.2
+Pillow==4.2.1
 psycopg2==2.7.1
 python-dateutil==2.6.0
 pytz==2017.2
