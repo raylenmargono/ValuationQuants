@@ -77,7 +77,13 @@ class InfoContainer extends React.Component {
       view = <h3>Loading</h3>
     }
     else if(hasError){
-      view = <h3>Ticker not found</h3>
+      view = (
+          <div className="row">
+            <div className="col s12">
+              <h3 className="center-align">Ticker not found</h3>
+            </div>
+          </div>
+      )
     }
     else {
       view = (
